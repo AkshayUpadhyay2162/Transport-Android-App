@@ -22,12 +22,12 @@ public class SHomeFragment extends Fragment {
         homeViewModel = ViewModelProviders.of(this).get(SHomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_shome, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
         return root;
     }
 }

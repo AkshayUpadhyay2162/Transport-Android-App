@@ -20,7 +20,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_shopkeeper"
-        app:menu="@menu/activity_shopkeeper_drawer" />
+        app:menu="@menu/activity_shopkeeper_drawer"
+        />
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -12,6 +12,10 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
+    <string name="t_ro">Recent orders</string>
+    <string name="t_dl">Dealers list</string>
+    <string name="t_history">History</string>
+
     <string name="home_second">Home Second</string>
     <string name="title_activity_shopkeeper">Shopkeeper</string>
     <string name="title_activity_transport">Transport</string>

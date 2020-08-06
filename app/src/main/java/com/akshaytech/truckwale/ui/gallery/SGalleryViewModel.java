@@ -10,7 +10,7 @@ public class SGalleryViewModel extends ViewModel {
 
     public SGalleryViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("Transporters list");
     }
 
     public LiveData<String> getText() {
