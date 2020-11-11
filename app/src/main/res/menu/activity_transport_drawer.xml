@@ -8,11 +8,8 @@
             android:id="@+id/nav_home"
             android:title="Recent orders" />
         <item
-            android:id="@+id/nav_gallery"
-            android:title="Dealers list" />
-        <item
             android:id="@+id/nav_slideshow"
-            android:title="History" />
+            android:title="Your information" />
         </group>
     <item android:title="Accounts">
         <menu>
@@ -20,8 +17,18 @@
                 android:id="@+id/nav_profile"
                 android:title="Profile"/>
             <item
+                android:id="@+id/nav_share"
+                android:title="Share"/>
+            <item
+                android:id="@+id/contact"
+                android:title="Contact Us"/>
+            <item
+                android:id="@+id/help"
+                android:title="Help"/>
+            <item
                 android:id="@+id/nav_logout"
-                android:title="Logout"/>
+                android:title="Logout"
+                android:onClick="T_Logout"/>
         </menu>
     </item>
 </menu>

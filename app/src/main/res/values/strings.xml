@@ -9,7 +9,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_profile">Profile</string>
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="t_ro">Recent orders</string>
@@ -19,4 +19,14 @@
     <string name="home_second">Home Second</string>
     <string name="title_activity_shopkeeper">Shopkeeper</string>
     <string name="title_activity_transport">Transport</string>
+    <string name="title_activity_admin_dashboard">Admin_dashboard</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="orders">Orders</string>
+    <string name="profile">Profile</string>
+    <string name="accounts">Accounts</string>
+    <string-array name="Vehicletype">
+        <item>Tempo</item>
+        <item>Truck</item>
+        <item>Tractor</item>
+    </string-array>
 </resources>

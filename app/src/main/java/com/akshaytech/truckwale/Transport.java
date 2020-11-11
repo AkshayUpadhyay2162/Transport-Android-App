@@ -9,6 +9,7 @@ import android.view.Menu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -61,5 +62,11 @@ public class Transport extends AppCompatActivity {
     public void Home(MenuItem item) {
         Intent intent = new Intent(Transport.this,MainActivity.class);
         startActivity(intent);
+    }
+
+    public void T_Logout(MenuItem item) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(),T_login.class));
+        finish();
     }
 }

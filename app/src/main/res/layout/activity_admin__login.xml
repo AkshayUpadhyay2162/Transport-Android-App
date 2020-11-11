@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/bg"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".T_login">
+    android:background="@drawable/bg"
+    tools:context=".Admin_Login">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Transporter Login"
+        android:text="Admin Login"
         android:textSize="30dp"
         android:textColor="#fff"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:gravity="center"
         android:padding="30dp">
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/Admin_email"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:textColor="#fff"
@@ -33,7 +33,7 @@
             android:hint="Email Address"
             android:inputType="textEmailAddress"/>
         <EditText
-            android:id="@+id/pass"
+            android:id="@+id/Admin_pass"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:hint="Password"
@@ -48,19 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="Login"
-            android:background="@drawable/btn_round"
-            android:onClick="Login2"
+            android:onClick="AdminLogin"
             android:textStyle="bold"
+            android:background="@drawable/btn_round"
             android:textAllCaps="false"
             android:textSize="20dp"/>
-        <TextView
-            android:layout_width="250dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:text="New user?\t Click here to register"
-            android:layout_marginTop="20dp"
-            android:textColor="#fff"
-            android:onClick="Register"/>
     </LinearLayout>
 </LinearLayout>

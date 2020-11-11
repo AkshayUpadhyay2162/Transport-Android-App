@@ -14,8 +14,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
    Button button1,button2;
+   FirebaseAuth fAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,5 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void AdminLogin(MenuItem item) {
         Toast.makeText(this, "Admin Login", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this,Admin_Login.class);
+        startActivity(intent);
     }
 }
