@@ -24,13 +24,16 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class PlaceOrder extends AppCompatActivity {
     public static final String TAG = "TAG";
     EditText editText1,editText2,editText3,editText4;
-    String Name,Email,Phone,fromAddress,toAddress,material,capacity;
+    String Name,Email,Phone,fromAddress,toAddress,material,capacity,date,time;
     FirebaseAuth fAuth;
     String UserID;
     FirebaseFirestore fStore;
@@ -61,6 +64,9 @@ public class PlaceOrder extends AppCompatActivity {
                     Name = documentSnapshot.getString("name");
                     Email = documentSnapshot.getString("email");
                     Phone = documentSnapshot.getString("contact");
+                    date = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
+                    time = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
+
                     DocumentReference documentReference = fStore.collection("Orders").document(UserID);
                     Map<String, Object> order = new HashMap<>();
                     order.put("Name",Name);
@@ -69,7 +75,9 @@ public class PlaceOrder extends AppCompatActivity {
                     order.put("Pickup Address",fromAddress);
                     order.put("Delivery Address",toAddress);
                     order.put("Material type",material);
-                    order.put("Capacity",capacity);
+                    order.put("Capacity",capacity+" Kg");
+                    order.put("Date",date);
+                    order.put("Time",time);
                     documentReference.set(order).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -85,7 +93,7 @@ public class PlaceOrder extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(PlaceOrder.this, "Redirecting to login page...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlaceOrder.this, "Redirecting...", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), PlaceOrder.class));
             }
         });
