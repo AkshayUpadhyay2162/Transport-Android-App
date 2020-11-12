@@ -37,7 +37,7 @@ public class Admin_Login extends AppCompatActivity {
             return;
         }
 
-        if(email.equals("akakakak")&&pass.equals("akakakak")){
+        if(email.equals("dwivedimanu12@gmail.com")&&pass.equals("manu@09121999")){
             Toast.makeText(this, "Logged in successfully...", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(),Admin.class));
         }

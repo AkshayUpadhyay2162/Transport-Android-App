@@ -60,7 +60,7 @@ public class Transport extends AppCompatActivity {
     }
 
     public void Home(MenuItem item) {
-        Intent intent = new Intent(Transport.this,MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
     }
 

@@ -17,4 +17,8 @@ public class Admin extends AppCompatActivity {
     public void Orderslist(View view) {
     startActivity(new Intent(getApplicationContext(),Orders_Activity.class));
     }
+
+    public void Admin_logout(View view) {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
 }

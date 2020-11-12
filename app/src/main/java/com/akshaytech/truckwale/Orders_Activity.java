@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,17 +44,17 @@ public class Orders_Activity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         listView = findViewById(R.id.orderlist);
-        arrayList = new ArrayList();;
+        arrayList = new ArrayList();
         listView.setBackgroundColor(Color.parseColor("#BACCD1"));
         fStore.collection("Orders").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
                 arrayList.clear();
                 for(DocumentSnapshot snapshot : documentSnapshots){
-                    arrayList.add(snapshot.getString("Date"));
-                    arrayAdapter = new ArrayAdapter(Orders_Activity.this, android.R.layout.simple_list_item_1, arrayList);
-                    listView.setAdapter(arrayAdapter);
+                    arrayList.add(snapshot.getString("Email"));
                 }
+                arrayAdapter = new ArrayAdapter(Orders_Activity.this, android.R.layout.simple_list_item_1, arrayList);
+                listView.setAdapter(arrayAdapter);
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,15 +63,15 @@ public class Orders_Activity extends AppCompatActivity {
                 fStore.collection("Orders").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
-                        String Date = (String) arrayList.get(position);
+                        String Email = (String) arrayList.get(position);
                         for(DocumentSnapshot snapshot : documentSnapshots){
-                            if(snapshot.getString("Date").equals(Date)){
+                            if(Email.equals(snapshot.getString("Email"))){
                                 faddress = snapshot.getString("Pickup Address");
                                 daddress = snapshot.getString("Delivery Address");
                                 material = snapshot.getString("Material type");
                                 Name = snapshot.getString("Name");
                                 Email = snapshot.getString("Email");
-                                Phone = snapshot.getString("Contact");
+                                Phone = snapshot.getString("Contact number");
                                 capacity = snapshot.getString("Capacity");
                                 date = snapshot.getString("Date");
                                 time = snapshot.getString("Time");
@@ -93,13 +94,14 @@ public class Orders_Activity extends AppCompatActivity {
                                         "\nTime: "+time);
                                 alertDialogBuilder.show();
                             }
-                            
+
                         }
                     }
-                });        
+                });
             }
         });
         
 
     }
+
 }
