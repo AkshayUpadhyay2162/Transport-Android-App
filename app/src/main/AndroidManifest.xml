@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Orders_Activity"></activity>
+        <activity android:name=".Transporters_list"></activity>
+        <activity android:name=".shopkeepers_list" />
+        <activity android:name=".Your_info" />
+        <activity android:name=".Transport" />
+        <activity android:name=".Orders_Activity" />
         <activity android:name=".Admin" />
         <activity android:name=".S_Profile" />
         <activity android:name=".PlaceOrder" />
@@ -17,10 +21,6 @@
         <activity android:name=".T_register" />
         <activity android:name=".S_Register" />
         <activity android:name=".Admin_Login" />
-        <activity
-            android:name=".Transport"
-            android:label="@string/title_activity_transport"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".S_login" />
         <activity android:name=".T_login" />
         <activity android:name=".MainActivity">

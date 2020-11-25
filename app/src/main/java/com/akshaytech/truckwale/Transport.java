@@ -1,72 +1,101 @@
 package com.akshaytech.truckwale;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Transport extends AppCompatActivity {
-
-    private AppBarConfiguration mAppBarConfiguration;
-
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    TextView textView;
+    ImageView tdp;
+    String UserId;
+    String profilename;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    CardView cardView1,cardView2,cardView3,cardView4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transport);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        textView = findViewById(R.id.Tname);
+        cardView1 = findViewById(R.id.tcv1);
+        cardView2 = findViewById(R.id.tcv2);
+        cardView3 = findViewById(R.id.tcv3);
+        cardView4 = findViewById(R.id.tcv4);
+        tdp = findViewById(R.id.tdp);
+        UserId = fAuth.getCurrentUser().getUid();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference().child("images/"+UserId);
+
+        try {
+            final File localFile = File.createTempFile(UserId+"","jpeg");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    tdp.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Transport.this, "Profile picture couldn't load", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        fStore.collection("Transporter").document(UserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    profilename = documentSnapshot.getString("name");
+                    textView.setText(profilename);
+                }
             }
         });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow).setDrawerLayout(drawer).build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.transport, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
-    }
-
-    public void Home(MenuItem item) {
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(intent);
-    }
-
-    public void T_Logout(MenuItem item) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(),T_login.class));
+    public void T_Logout(View view) {
+        Animation animation = AnimationUtils.loadAnimation(Transport.this ,R.anim.bounce);
+        cardView4.startAnimation(animation);
+        fAuth.signOut();
         finish();
+        startActivity(new Intent(getApplicationContext(),T_login.class));
+    }
+
+    public void YourInfo(View view) {
+        Animation animation = AnimationUtils.loadAnimation(Transport.this ,R.anim.bounce);
+        cardView3.startAnimation(animation);
+        startActivity(new Intent(getApplicationContext(),Your_info.class));
     }
 }

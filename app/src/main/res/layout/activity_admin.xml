@@ -13,12 +13,40 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:text="Select one option"
+            android:fontFamily="serif-monospace"/>
+
         <Button
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:background="@drawable/btn_round"
             android:text="Orders"
+            android:layout_marginTop="50dp"
             android:onClick="Orderslist"
+            android:textAllCaps="false"
+            />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_round"
+            android:text="Shopkeepers"
+            android:onClick="shopkeepers_list"
+            android:layout_marginTop="20dp"
+            android:textAllCaps="false"
+            />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_round"
+            android:text="Transporters"
+            android:onClick="transporters_list"
+            android:layout_marginTop="20dp"
             android:textAllCaps="false"
             />
         <Button

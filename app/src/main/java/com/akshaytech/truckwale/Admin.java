@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class Admin extends AppCompatActivity {
 
     @Override
@@ -20,5 +22,13 @@ public class Admin extends AppCompatActivity {
 
     public void Admin_logout(View view) {
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
+
+    public void shopkeepers_list(View view) {
+        startActivity(new Intent(getApplicationContext(),shopkeepers_list.class));
+    }
+
+    public void transporters_list(View view) {
+        startActivity(new Intent(getApplicationContext(),Transporters_list.class));
     }
 }

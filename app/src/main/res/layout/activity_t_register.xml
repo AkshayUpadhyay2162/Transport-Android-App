@@ -22,9 +22,33 @@
                 android:layout_height="wrap_content"
                 android:text="Create new account"
                 android:layout_marginTop="10dp"
-                android:textSize="20dp"
-                android:textColor="#fff"
-                android:textStyle="bold"/>
+                android:textSize="25dp"
+                android:fontFamily="serif-monospace"
+                android:textColor="#fff"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="250dp"
+                app:cardBackgroundColor="#fff">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    app:cardCornerRadius="250dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/t_profile_pic"
+                        android:layout_width="130dp"
+                        android:src="@drawable/avatar"
+                        android:layout_height="130dp"
+                        android:scaleType="centerCrop"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
             <EditText
                 android:id="@+id/T_username"
                 android:layout_width="match_parent"
@@ -66,21 +90,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/edit_round"
-                android:hint="Vehicle number"
+                android:hint="Total no of vehicles"
                 android:padding="10dp"
-                android:inputType="text"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
-                android:layout_marginTop="10dp"
-                />
-            <EditText
-                android:id="@+id/T_Permit"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/edit_round"
-                android:hint="Permit"
-                android:padding="10dp"
-                android:inputType="text"
+                android:inputType="number"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
                 android:layout_marginTop="10dp"

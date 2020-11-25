@@ -17,14 +17,39 @@
         android:padding="30dp"
         android:gravity="center"
         android:layout_below="@+id/toolbar">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create new account"
             android:layout_marginTop="10dp"
-            android:textSize="20dp"
+            android:fontFamily="serif-monospace"
+            android:text="Create new account"
             android:textColor="#fff"
-            android:textStyle="bold"/>
+            android:textSize="25dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="250dp"
+            app:cardBackgroundColor="#fff">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/s_profile_pic"
+                    android:layout_width="130dp"
+                    android:src="@drawable/avatar"
+                    android:layout_height="130dp"
+                    android:scaleType="centerCrop"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
         <EditText
             android:id="@+id/Username"
             android:layout_width="match_parent"

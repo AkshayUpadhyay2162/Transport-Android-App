@@ -10,10 +10,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shopkeeper Login"
-        android:textSize="30dp"
+        android:text="Shopkeeper"
+        android:textSize="40dp"
         android:textColor="#fff"
-        android:textStyle="bold"
+        android:fontFamily="sans-serif-smallcaps"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"/>
     <LinearLayout
@@ -28,6 +28,7 @@
             android:layout_height="40dp"
             android:textColor="#fff"
             android:textColorHint="#fff"
+            android:padding="10dp"
             android:drawableLeft="@drawable/ic_action_email"
             android:background="@drawable/edit_round"
             android:hint="Email Address"
@@ -37,16 +38,26 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:hint="Password"
+            android:padding="10dp"
             android:textColor="#fff"
             android:drawableLeft="@drawable/ic_action_password"
             android:background="@drawable/edit_round"
             android:textColorHint="#fff"
             android:inputType="textPassword"
             android:layout_marginTop="20dp"/>
+        <CheckBox
+            android:id="@+id/rememberme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remember Me"
+            android:textColor="#fff"
+            android:checked="false"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"/>
         <Button
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:text="Login"
             android:onClick="Login"
             android:textStyle="bold"
@@ -54,6 +65,7 @@
             android:textAllCaps="false"
             android:textSize="20dp"/>
         <TextView
+            android:id="@+id/S_register"
             android:layout_width="250dp"
             android:padding="10dp"
             android:gravity="center"

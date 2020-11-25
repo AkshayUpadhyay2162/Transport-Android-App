@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +24,7 @@ public class T_login extends AppCompatActivity {
     EditText editText1, editText2;
     String email, password;
     FirebaseAuth fAuth;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class T_login extends AppCompatActivity {
         setContentView(R.layout.activity_t_login);
         editText1 = findViewById(R.id.email);
         editText2 = findViewById(R.id.pass);
+        textView = findViewById(R.id.t_register);
         fAuth = FirebaseAuth.getInstance();
     }
 
@@ -45,6 +50,19 @@ public class T_login extends AppCompatActivity {
     public void Login2(View view) {
         email = editText1.getText().toString();
         password = editText2.getText().toString();
+        if(TextUtils.isEmpty(email)){
+            editText1.setError("This field is required!");
+            return;
+        }
+        if(TextUtils.isEmpty(password)){
+            editText2.setError("This field is required!");
+            return;
+        }
+
+        if(password.length()<6){
+            editText2.setError("Password should be greater than or equal to 6!");
+            return;
+        }
         fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -61,6 +79,7 @@ public class T_login extends AppCompatActivity {
     }
 
     public void Register(View view) {
+        textView.setTextColor(Color.GRAY);
         startActivity(new Intent(getApplicationContext(),T_register.class));
     }
 }

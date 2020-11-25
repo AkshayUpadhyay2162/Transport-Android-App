@@ -1,7 +1,6 @@
 package com.akshaytech.truckwale;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,9 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,33 +26,34 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class PlaceOrder extends AppCompatActivity {
+public class Your_info extends AppCompatActivity {
     public static final String TAG = "TAG";
-    EditText editText1,editText2,editText3,editText4;
-    String Name,Email,Phone,fromAddress,toAddress,material,capacity,date,time;
+    EditText editText1,editText2,editText3,editText4,editText5;
+    String Name,Email,Phone,currentLoc,Destination,Gtype,date,time,permit,vehiclenumber;
     FirebaseAuth fAuth;
     String UserID;
     FirebaseFirestore fStore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place_order);
-        editText1 = findViewById(R.id.pickupAddress);
-        editText2 = findViewById(R.id.DeliveryAddress);
-        editText3 = findViewById(R.id.Material);
-        editText4 = findViewById(R.id.capacity);
+        setContentView(R.layout.activity_your_info);
+        editText1 = findViewById(R.id.currentLocation);
+        editText2 = findViewById(R.id.Destination);
+        editText3 = findViewById(R.id.GoodsType);
+        editText4 = findViewById(R.id.vehiclenumber);
+        editText5 = findViewById(R.id.permit);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
     }
 
-    public void Order(View view) {
-        fromAddress = editText1.getText().toString();
-        toAddress = editText2.getText().toString();
-        material = editText3.getText().toString();
-        capacity = editText4.getText().toString();
+    public void SubmitLocation(View view) {
+        currentLoc = editText1.getText().toString();
+        Destination = editText2.getText().toString();
+        Gtype = editText3.getText().toString();
+        vehiclenumber = editText4.getText().toString();
+        permit = editText5.getText().toString();
         UserID = fAuth.getCurrentUser().getUid();
-
-        fStore.collection("Shopkeepers").document(UserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        fStore.collection("Transporter").document(UserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
@@ -67,37 +64,38 @@ public class PlaceOrder extends AppCompatActivity {
                     date = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
                     time = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
 
-                    DocumentReference documentReference = fStore.collection("Orders").document(UserID);
-                    Map<String, Object> order = new HashMap<>();
-                    order.put("Name",Name);
-                    order.put("Email",Email);
-                    order.put("Contact number",Phone);
-                    order.put("Pickup Address",fromAddress);
-                    order.put("Delivery Address",toAddress);
-                    order.put("Material type",material);
-                    order.put("Capacity",capacity+" Kg");
-                    order.put("Date",date);
-                    order.put("Time",time);
-                    documentReference.set(order).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    DocumentReference documentReference = fStore.collection("Current Location").document(UserID);
+                    Map<String, Object> currentLocation = new HashMap<>();
+                    currentLocation.put("Name",Name);
+                    currentLocation.put("Email",Email);
+                    currentLocation.put("Contact number",Phone);
+                    currentLocation.put("Current Location",currentLoc);
+                    currentLocation.put("Destination",Destination);
+                    currentLocation.put("Goods type",Gtype);
+                    currentLocation.put("Vehicle number",vehiclenumber);
+                    currentLocation.put("Permit",permit);
+                    currentLocation.put("Date",date);
+                    currentLocation.put("Time",time);
+                    documentReference.set(currentLocation).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d(TAG,"onsuccess: order placed "+UserID);
+                            Log.d(TAG,"onsuccess: location submitted"+UserID);
                         }
                     });
                 }
             }
         });
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PlaceOrder.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Your_info.this);
         alertDialogBuilder.setTitle("Result");
         alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(PlaceOrder.this, "Redirecting...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), ShopkeeperActivity.class));
+                Toast.makeText(Your_info.this, "Redirecting...", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), Transport.class));
             }
         });
-        alertDialogBuilder.setMessage("Order Placed! You will get notification in 1 hour.");
+        alertDialogBuilder.setMessage("Location submitted successfully.");
         alertDialogBuilder.show();
     }
 }

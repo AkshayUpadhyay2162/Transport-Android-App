@@ -1,36 +1,52 @@
 package com.akshaytech.truckwale;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class S_Register extends AppCompatActivity {
+    ImageView profilepic;
+    public Uri imageUri;
     public static final String TAG = "TAG";
     EditText editText1,editText2,editText3,editText4,editText5,editText6,editText7,editText8;
     String fullname,email,address,city,state,contact,password,cpassword;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String UserID;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +60,37 @@ public class S_Register extends AppCompatActivity {
         editText6 = findViewById(R.id.CN);
         editText7 = findViewById(R.id.Password);
         editText8 = findViewById(R.id.CPassword);
+        profilepic = findViewById(R.id.s_profile_pic);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         if(fAuth.getCurrentUser()!=null){
             startActivity(new Intent(getApplicationContext(),ShopkeeperActivity.class));
             finish();
+        }
+        profilepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choosepicture();
+            }
+        });
+    }
+
+
+    private void choosepicture() {
+    Intent intent = new Intent();
+    intent.setType("image/*");
+    intent.setAction(Intent.ACTION_GET_CONTENT);
+    startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+            imageUri = data.getData();
+            profilepic.setImageURI(imageUri);
         }
     }
 
@@ -107,6 +149,7 @@ public class S_Register extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     UserID = fAuth.getCurrentUser().getUid();
+                    uploadPicture();
                     DocumentReference documentReference = fStore.collection("Shopkeepers").document(UserID);
                     Map<String, Object> user = new HashMap<>();
                     user.put("name",fullname);
@@ -128,6 +171,7 @@ public class S_Register extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Toast.makeText(S_Register.this, "Redirecting to login page...", Toast.LENGTH_SHORT).show();
+                            fAuth.signOut();
                             startActivity(new Intent(getApplicationContext(), S_login.class));
                         }
                     });
@@ -135,7 +179,7 @@ public class S_Register extends AppCompatActivity {
                     alertDialogBuilder.show();
 
                 } else {
-                    Toast.makeText(S_Register.this, "Registration failed!", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content),"Registration failed!",Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -144,5 +188,35 @@ public class S_Register extends AppCompatActivity {
         editText8.setError("Password does not match!");
         return;
     }
+    }
+
+    private void uploadPicture() {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setTitle("Uploading image...");
+        pd.show();
+        UserID = fAuth.getCurrentUser().getUid();
+        StorageReference riversRef = storageReference.child("images/"+UserID);
+
+        riversRef.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        pd.dismiss();
+                        Snackbar.make(findViewById(android.R.id.content),"Image uploaded...",Snackbar.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        pd.dismiss();
+                        Toast.makeText(S_Register.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                double progressPercent = (100.00 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                pd.setMessage("Percentage " + (int)progressPercent + "%");
+            }
+        });
     }
 }
