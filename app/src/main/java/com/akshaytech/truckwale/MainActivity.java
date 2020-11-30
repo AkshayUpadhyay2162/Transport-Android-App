@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
    Button button1,button2;
-   FirebaseAuth fAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     public void TransportLogin(View view) {
         Animation animation = AnimationUtils.loadAnimation(MainActivity.this ,R.anim.bounce);
         button1.startAnimation(animation);
-        Toast.makeText(this, "Transport Login", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,T_login.class);
         startActivity(intent);
     }
@@ -44,14 +43,17 @@ public class MainActivity extends AppCompatActivity {
     public void shopkeeperLogin(View view) {
         Animation animation = AnimationUtils.loadAnimation(MainActivity.this ,R.anim.bounce);
         button2.startAnimation(animation);
-        Toast.makeText(this, "Shopkeeper Login", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,S_login.class);
         startActivity(intent);
     }
 
     public void AdminLogin(MenuItem item) {
-        Toast.makeText(this, "Admin Login", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,Admin_Login.class);
         startActivity(intent);
+    }
+
+    public void exit(MenuItem item) {
+        finish();
+        System.exit(0);
     }
 }

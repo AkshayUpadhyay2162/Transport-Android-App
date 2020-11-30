@@ -14,15 +14,16 @@
         app:lottie_loop="true"
         app:lottie_autoPlay="true"
         android:layout_height="180dp"></com.airbnb.lottie.LottieAnimationView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Truckwale"
         android:layout_gravity="center_horizontal"
-        android:textColor="#fff"
-        android:fontFamily="sans-serif-smallcaps"
-        android:layout_marginBottom="80dp"
-        android:textSize="50sp"/>
+        android:layout_marginBottom="30dp"
+        android:fontFamily="@font/bangers"
+        android:text="Truckwale"
+        android:textColor="#D3C5C5"
+        android:textSize="60sp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,5 +69,6 @@
         android:layout_marginTop="70dp"
         android:fontFamily="serif-monospace"
         android:layout_gravity="center"
-        android:text="Created by - Akshay Upadhyay"/>
+        android:text="Created by - Akshay Upadhyay\n(AkkiTech)"
+        android:textAlignment="center"/>
 </LinearLayout>

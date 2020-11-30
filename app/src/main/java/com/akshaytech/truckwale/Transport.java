@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,7 +57,6 @@ public class Transport extends AppCompatActivity {
         UserId = fAuth.getCurrentUser().getUid();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference().child("images/"+UserId);
-
         try {
             final File localFile = File.createTempFile(UserId+"","jpeg");
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -97,5 +99,25 @@ public class Transport extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(Transport.this ,R.anim.bounce);
         cardView3.startAnimation(animation);
         startActivity(new Intent(getApplicationContext(),Your_info.class));
+    }
+
+    public void T_profile(View view) {
+        Animation animation = AnimationUtils.loadAnimation(Transport.this ,R.anim.bounce);
+        cardView2.startAnimation(animation);
+        startActivity(new Intent(getApplicationContext(),T_Profile.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.tmenu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void Contact(MenuItem item) {
+        startActivity(new Intent(getApplicationContext(),Contact_us.class));
+    }
+
+    public void Home(MenuItem item) {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
 }

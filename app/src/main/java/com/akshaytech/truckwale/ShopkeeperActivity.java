@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -106,5 +109,19 @@ public class ShopkeeperActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(ShopkeeperActivity.this ,R.anim.bounce);
         cardView2.startAnimation(animation);
         startActivity(new Intent(getApplicationContext(),S_Profile.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.skmenu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void Contactus(MenuItem item) {
+        startActivity(new Intent(getApplicationContext(),Contact_us.class));
+    }
+
+    public void Home(MenuItem item) {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
 }

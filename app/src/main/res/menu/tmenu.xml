@@ -2,8 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:title="Home"
-        android:onClick="Home"></item>
+        android:onClick="Home">
+    </item>
     <item
-        android:title="Exit"
-        ></item>
+        android:title="Contact us"
+        android:onClick="Contact">
+    </item>
 </menu>

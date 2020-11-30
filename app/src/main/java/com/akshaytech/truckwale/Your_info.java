@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class Your_info extends AppCompatActivity {
     public static final String TAG = "TAG";
@@ -53,6 +55,26 @@ public class Your_info extends AppCompatActivity {
         vehiclenumber = editText4.getText().toString();
         permit = editText5.getText().toString();
         UserID = fAuth.getCurrentUser().getUid();
+        if(TextUtils.isEmpty(currentLoc)){
+            editText1.setError("This field is required");
+            return;
+        }
+        if(TextUtils.isEmpty(Destination)){
+            editText2.setError("This field is required");
+            return;
+        }
+        if(TextUtils.isEmpty(Gtype)){
+            editText3.setError("This field is required");
+            return;
+        }
+        if(TextUtils.isEmpty(vehiclenumber)){
+            editText4.setError("This field is required");
+            return;
+        }
+        if(TextUtils.isEmpty(permit)){
+            editText5.setError("This field is required");
+            return;
+        }
         fStore.collection("Transporter").document(UserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -63,8 +85,8 @@ public class Your_info extends AppCompatActivity {
                     Phone = documentSnapshot.getString("contact");
                     date = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
                     time = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
-
-                    DocumentReference documentReference = fStore.collection("Current Location").document(UserID);
+                    final String key = Email+"("+UUID.randomUUID().toString()+")";
+                    DocumentReference documentReference = fStore.collection("Current Location").document(key);
                     Map<String, Object> currentLocation = new HashMap<>();
                     currentLocation.put("Name",Name);
                     currentLocation.put("Email",Email);

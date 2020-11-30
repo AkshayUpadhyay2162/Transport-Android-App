@@ -12,22 +12,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class S_login extends AppCompatActivity {
     CheckBox checkBox;
     EditText editText1,editText2;
+    ProgressBar progressBar;
     String email, password;
     FirebaseAuth fAuth;
     TextView textView;
-    String e;
-    String p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +37,12 @@ public class S_login extends AppCompatActivity {
         editText2 = findViewById(R.id.pass);
         textView = findViewById(R.id.S_register);
         checkBox = findViewById(R.id.rememberme);
+        progressBar = findViewById(R.id.slogin_pb);
+        progressBar.setVisibility(View.GONE);
         fAuth = FirebaseAuth.getInstance();
 
-        editText1.setText(e);
-        editText2.setText(p);
+        Snackbar.make(findViewById(android.R.id.content),"Shopkeeper login",Snackbar.LENGTH_LONG).show();
+
     }
 
     @Override
@@ -53,8 +56,9 @@ public class S_login extends AppCompatActivity {
         startActivity(intent);
     }
     public void Login(View view) {
-    email = editText1.getText().toString();
-    password = editText2.getText().toString();
+        progressBar.setVisibility(View.VISIBLE);
+        email = editText1.getText().toString();
+        password = editText2.getText().toString();
 
     if(TextUtils.isEmpty(email)){
         editText1.setError("This field is required!");
@@ -69,11 +73,6 @@ public class S_login extends AppCompatActivity {
         editText2.setError("Password should be greater than or equal to 6!");
         return;
     }
-    if(checkBox.isChecked()==true){
-        e = email;
-        p = password;
-//        Toast.makeText(this, e+" "+p, Toast.LENGTH_SHORT).show();
-    }
 
     fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
         @Override
@@ -83,7 +82,8 @@ public class S_login extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),ShopkeeperActivity.class));
             }
             else {
-                Toast.makeText(S_login.this, "Incorrect email or password!", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                Snackbar.make(findViewById(android.R.id.content),"Incorrect email or password!",Snackbar.LENGTH_LONG).show();
             }
         }
     });
@@ -94,4 +94,5 @@ public class S_login extends AppCompatActivity {
         Intent intent = new Intent(S_login.this,S_Register.class);
         startActivity(intent);
     }
+
 }

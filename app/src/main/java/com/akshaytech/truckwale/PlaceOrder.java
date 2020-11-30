@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class PlaceOrder extends AppCompatActivity {
     public static final String TAG = "TAG";
@@ -55,6 +57,22 @@ public class PlaceOrder extends AppCompatActivity {
         material = editText3.getText().toString();
         capacity = editText4.getText().toString();
         UserID = fAuth.getCurrentUser().getUid();
+        if(TextUtils.isEmpty(fromAddress)){
+            editText1.setError("This field is required");
+            return;
+        }
+        if(TextUtils.isEmpty(toAddress)){
+            editText2.setError("This field is required");
+            return;
+        }
+        if(TextUtils.isEmpty(material)){
+            editText3.setError("This field is required");
+            return;
+        }
+        if(TextUtils.isEmpty(capacity)){
+            editText4.setError("This field is required");
+            return;
+        }
 
         fStore.collection("Shopkeepers").document(UserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -66,8 +84,8 @@ public class PlaceOrder extends AppCompatActivity {
                     Phone = documentSnapshot.getString("contact");
                     date = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
                     time = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
-
-                    DocumentReference documentReference = fStore.collection("Orders").document(UserID);
+                    final String key = Email+"("+UUID.randomUUID().toString()+")";
+                    DocumentReference documentReference = fStore.collection("Orders").document(key);
                     Map<String, Object> order = new HashMap<>();
                     order.put("Name",Name);
                     order.put("Email",Email);

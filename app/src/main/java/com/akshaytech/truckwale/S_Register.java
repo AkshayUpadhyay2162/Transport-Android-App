@@ -65,10 +65,7 @@ public class S_Register extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        if(fAuth.getCurrentUser()!=null){
-            startActivity(new Intent(getApplicationContext(),ShopkeeperActivity.class));
-            finish();
-        }
+
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +146,6 @@ public class S_Register extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     UserID = fAuth.getCurrentUser().getUid();
-                    uploadPicture();
                     DocumentReference documentReference = fStore.collection("Shopkeepers").document(UserID);
                     Map<String, Object> user = new HashMap<>();
                     user.put("name",fullname);
@@ -158,13 +154,14 @@ public class S_Register extends AppCompatActivity {
                     user.put("city",city);
                     user.put("state",state);
                     user.put("contact",contact);
+                    user.put("Password",password);
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG,"onsuccess: user profile is created for "+UserID);
                         }
                     });
-
+                    uploadPicture();
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(S_Register.this);
                     alertDialogBuilder.setTitle("Result");
                     alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -183,6 +180,7 @@ public class S_Register extends AppCompatActivity {
                 }
             }
         });
+
     }
     else {
         editText8.setError("Password does not match!");

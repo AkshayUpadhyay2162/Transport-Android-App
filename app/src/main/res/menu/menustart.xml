@@ -6,6 +6,7 @@
         ></item>
     <item
         android:title="Exit"
+        android:onClick="exit"
         ></item>
 
 </menu>

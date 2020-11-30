@@ -11,11 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,6 +26,7 @@ public class T_login extends AppCompatActivity {
     EditText editText1, editText2;
     String email, password;
     FirebaseAuth fAuth;
+    ProgressBar progressBar;
     TextView textView;
 
     @Override
@@ -33,7 +36,11 @@ public class T_login extends AppCompatActivity {
         editText1 = findViewById(R.id.email);
         editText2 = findViewById(R.id.pass);
         textView = findViewById(R.id.t_register);
+        progressBar = findViewById(R.id.tlogin_pb);
+        progressBar.setVisibility(View.GONE);
         fAuth = FirebaseAuth.getInstance();
+        Snackbar.make(findViewById(android.R.id.content),"Transporter login",Snackbar.LENGTH_LONG).show();
+
     }
 
     @Override
@@ -48,6 +55,7 @@ public class T_login extends AppCompatActivity {
     }
 
     public void Login2(View view) {
+        progressBar.setVisibility(View.VISIBLE);
         email = editText1.getText().toString();
         password = editText2.getText().toString();
         if(TextUtils.isEmpty(email)){
@@ -71,7 +79,8 @@ public class T_login extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(),Transport.class));
                 }
                 else {
-                    Toast.makeText(T_login.this, "Incorrect email or password!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    Snackbar.make(findViewById(android.R.id.content),"Incorrect email or password!",Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -82,4 +91,5 @@ public class T_login extends AppCompatActivity {
         textView.setTextColor(Color.GRAY);
         startActivity(new Intent(getApplicationContext(),T_register.class));
     }
+
 }

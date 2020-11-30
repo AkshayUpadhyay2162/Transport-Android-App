@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Transporters_list"></activity>
+        <activity android:name=".Contact_us"></activity>
+        <activity android:name=".startActivity" />
+        <activity android:name=".T_Profile" />
+        <activity android:name=".Transporters_list" />
         <activity android:name=".shopkeepers_list" />
         <activity android:name=".Your_info" />
         <activity android:name=".Transport" />
