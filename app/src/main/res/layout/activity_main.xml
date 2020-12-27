@@ -7,6 +7,14 @@
     android:orientation="vertical"
     android:background="@drawable/bg"
     tools:context=".MainActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
@@ -28,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enter as transporter or shopkeeper"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:textColor="#fff"
         android:fontFamily="serif-monospace"
         android:layout_marginBottom="40dp"
@@ -65,10 +73,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#fff"
-        android:textSize="15sp"
-        android:layout_marginTop="70dp"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="serif-monospace"
         android:layout_gravity="center"
-        android:text="Created by - Akshay Upadhyay\n(AkkiTech)"
-        android:textAlignment="center"/>
+        android:text="AkkiTech"/>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

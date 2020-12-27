@@ -97,13 +97,13 @@ public class Transport extends AppCompatActivity {
 
     public void YourInfo(View view) {
         Animation animation = AnimationUtils.loadAnimation(Transport.this ,R.anim.bounce);
-        cardView3.startAnimation(animation);
+        cardView2.startAnimation(animation);
         startActivity(new Intent(getApplicationContext(),Your_info.class));
     }
 
     public void T_profile(View view) {
         Animation animation = AnimationUtils.loadAnimation(Transport.this ,R.anim.bounce);
-        cardView2.startAnimation(animation);
+        cardView1.startAnimation(animation);
         startActivity(new Intent(getApplicationContext(),T_Profile.class));
     }
 
@@ -119,5 +119,11 @@ public class Transport extends AppCompatActivity {
 
     public void Home(MenuItem item) {
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
+
+    public void Contact(View view) {
+        Animation animation = AnimationUtils.loadAnimation(Transport.this ,R.anim.bounce);
+        cardView3.startAnimation(animation);
+        startActivity(new Intent(getApplicationContext(),Contact_us.class));
     }
 }

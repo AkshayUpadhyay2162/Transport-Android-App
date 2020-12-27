@@ -21,7 +21,7 @@ public class T_Profile extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String UserID;
-    String tname,temail,tvt,tnov,tphone,taddress,tcity,tstate;
+    String tname,temail,tvt,NOV,tphone,taddress,tcity,tstate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class T_Profile extends AppCompatActivity {
                     tname = documentSnapshot.getString("name");
                     temail = documentSnapshot.getString("email");
                     tvt = documentSnapshot.getString("Vehicle type");
-                    tnov = documentSnapshot.getString("Total no. of vehicles");
+                    NOV = documentSnapshot.getString("Total no. of vehicles");
                     tphone = documentSnapshot.getString("contact");
                     taddress = documentSnapshot.getString("Address");
                     tcity = documentSnapshot.getString("city");
@@ -53,12 +53,12 @@ public class T_Profile extends AppCompatActivity {
                     T_Name.setText(tname);
                     T_Email.setText(temail);
                     T_VT.setText(tvt);
-                    T_NOV.setText(tnov);
+                    T_NOV.setText(NOV);
                     T_Phone.setText(tphone);
                     T_Address.setText(taddress);
                     T_City.setText(tcity);
                     T_State.setText(tstate);
-                    Snackbar.make(findViewById(android.R.id.content),""+tnov,Snackbar.LENGTH_LONG).show();
+//                    Snackbar.make(findViewById(android.R.id.content),""+tnov,Snackbar.LENGTH_LONG).show();
                 }
             }
         });

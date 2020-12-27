@@ -124,4 +124,10 @@ public class ShopkeeperActivity extends AppCompatActivity {
     public void Home(MenuItem item) {
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
+
+    public void ContactUS(View view) {
+        Animation animation = AnimationUtils.loadAnimation(ShopkeeperActivity.this ,R.anim.bounce);
+        cardView3.startAnimation(animation);
+        startActivity(new Intent(getApplicationContext(),Contact_us.class));
+    }
 }
